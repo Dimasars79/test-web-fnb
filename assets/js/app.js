@@ -205,38 +205,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
         const data = buffer.getChannelData(0);
         
-        // Brown noise generation for a warm cafe hum
-        let lastOut = 0;
-        for (let i = 0; i < bufferSize; i++) {
-            let white = Math.random() * 2 - 1;
-            data[i] = (lastOut + (0.02 * white)) / 1.02;
-            lastOut = data[i];
-            data[i] *= 3.5; // (roughly) compensate for gain
-        }
-        
-        oscillator = audioCtx.createBufferSource();
-        oscillator.buffer = buffer;
-        oscillator.loop = true;
-        
-        // Apply lowpass filter
-        let filter = audioCtx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.value = 400; // Muffled, warm sound
-        
+        // Create a simple low hum/rumble to simulate night ambiance
+        oscillator = audioCtx.createOscillator();
         gainNode = audioCtx.createGain();
-        gainNode.gain.value = 0.05; // Very subtle volume
         
-        oscillator.connect(filter);
-        filter.connect(gainNode);
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(50, audioCtx.currentTime); // low freq
+        
+        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 2); // fade in
+        
+        oscillator.connect(gainNode);
         gainNode.connect(audioCtx.destination);
         
         oscillator.start();
     };
 
     const stopAmbientNoise = () => {
-        if (oscillator) {
-            oscillator.stop();
-            oscillator.disconnect();
+        if (gainNode) {
+            gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1); // fade out
+            setTimeout(() => {
+                if(oscillator) oscillator.stop();
+            }, 1000);
         }
     };
 
@@ -246,11 +236,13 @@ document.addEventListener('DOMContentLoaded', () => {
             soundIcon.textContent = '🔊';
             soundToggle.classList.add('btn-primary');
             soundToggle.classList.remove('btn-outline');
+            if (visualizerDot) visualizerDot.classList.add('playing');
             playAmbientNoise();
         } else {
             soundIcon.textContent = '🔈';
             soundToggle.classList.remove('btn-primary');
             soundToggle.classList.add('btn-outline');
+            if (visualizerDot) visualizerDot.classList.remove('playing');
             stopAmbientNoise();
         }
     });
