@@ -77,9 +77,23 @@ document.addEventListener('DOMContentLoaded', () => {
     updateStatus();
     setInterval(updateStatus, 60000); // Check every minute
 
-    if (statusPillBtn) {
-        statusPillBtn.addEventListener('click', () => {
-            alert("⏰ TITIK HENTI OPENING HOURS:\n\n• Weekday (Mon-Fri): 12.00 - 22.00 WIB\n• Weekend (Sat-Sun): 15.00 - 24.00 WIB");
+    const hoursModal = document.getElementById('hours-modal');
+    const closeHoursModal = document.getElementById('close-hours-modal');
+
+    if (statusPillBtn && hoursModal) {
+        statusPillBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            hoursModal.classList.add('active');
+        });
+        
+        closeHoursModal.addEventListener('click', () => {
+            hoursModal.classList.remove('active');
+        });
+
+        hoursModal.addEventListener('click', (e) => {
+            if (e.target === hoursModal) {
+                hoursModal.classList.remove('active');
+            }
         });
     }
 
