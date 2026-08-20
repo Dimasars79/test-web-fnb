@@ -184,14 +184,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Ambient Sound Toggle (Simulated) ---
-    // Note: Due to browser auto-play policies, actual audio needs user interaction first.
-    // For this demo, we'll just toggle UI states.
+    // --- Ambient Sound Toggle ---
     const soundToggle = document.getElementById('sound-toggle');
     const soundIcon = document.getElementById('sound-icon');
+    const visualizerDot = document.getElementById('visualizer-dot');
+    const volumeContainer = document.getElementById('volume-container');
+    const volumeSlider = document.getElementById('volume-slider');
     let isPlaying = false;
     
-    // Create a synthesized ambient noise just for effect
     let audioCtx;
     let oscillator;
     let gainNode;
@@ -201,24 +201,26 @@ document.addEventListener('DOMContentLoaded', () => {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         }
         
-        const bufferSize = audioCtx.sampleRate * 2; // 2 seconds of noise
-        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-        const data = buffer.getChannelData(0);
-        
-        // Create a simple low hum/rumble to simulate night ambiance
         oscillator = audioCtx.createOscillator();
         gainNode = audioCtx.createGain();
         
         oscillator.type = 'sine';
         oscillator.frequency.setValueAtTime(50, audioCtx.currentTime); // low freq
         
+        const currentVol = parseFloat(volumeSlider.value);
+        
         gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-        gainNode.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 2); // fade in
+        gainNode.gain.linearRampToValueAtTime(currentVol * 0.1, audioCtx.currentTime + 2); // max actual gain 0.1
         
         oscillator.connect(gainNode);
         gainNode.connect(audioCtx.destination);
         
         oscillator.start();
+        
+        // Update visualizer scale
+        if (visualizerDot) {
+            visualizerDot.style.setProperty('--v-scale', currentVol * 1.5);
+        }
     };
 
     const stopAmbientNoise = () => {
@@ -237,15 +239,38 @@ document.addEventListener('DOMContentLoaded', () => {
             soundToggle.classList.add('btn-primary');
             soundToggle.classList.remove('btn-outline');
             if (visualizerDot) visualizerDot.classList.add('playing');
+            if (volumeContainer) volumeContainer.style.display = 'flex';
+            
+            // Resume context if suspended (browser auto-play policy)
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
             playAmbientNoise();
         } else {
             soundIcon.textContent = '🔈';
             soundToggle.classList.remove('btn-primary');
             soundToggle.classList.add('btn-outline');
             if (visualizerDot) visualizerDot.classList.remove('playing');
+            if (volumeContainer) volumeContainer.style.display = 'none';
             stopAmbientNoise();
         }
     });
+
+    if (volumeSlider) {
+        volumeSlider.addEventListener('input', (e) => {
+            const vol = parseFloat(e.target.value);
+            if (gainNode) {
+                // Instantly update volume
+                gainNode.gain.setTargetAtTime(vol * 0.1, audioCtx.currentTime, 0.1);
+            }
+            // Update visualizer intensity (scale factor)
+            if (visualizerDot) {
+                // If vol is 0, visualizer scale is 0 (stops bouncing essentially)
+                // If vol is 1, visualizer scale is 1.5x
+                visualizerDot.style.setProperty('--v-scale', vol * 1.5);
+            }
+        });
+    }
 
     // --- Back to Top ---
     const backToTopBtn = document.getElementById('back-to-top');
