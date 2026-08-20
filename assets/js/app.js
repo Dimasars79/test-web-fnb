@@ -223,53 +223,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 80);
     };
     
-    // Create a synthesized ambient noise just for effect
-    let audioCtx;
-    let oscillator;
-    let gainNode;
+    // Load the user's ambient sound file
+    const ambientAudio = new Audio('assets/sound/New York City Ambience Sound Effect.mp3');
+    ambientAudio.loop = true;
+    ambientAudio.volume = 0.5; // adjust volume as needed
 
     const playAmbientNoise = () => {
-        if (!audioCtx) {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        }
-        
-        const bufferSize = audioCtx.sampleRate * 2; // 2 seconds of noise
-        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-        const data = buffer.getChannelData(0);
-        
-        // Brown noise generation for a warm cafe hum
-        let lastOut = 0;
-        for (let i = 0; i < bufferSize; i++) {
-            let white = Math.random() * 2 - 1;
-            data[i] = (lastOut + (0.02 * white)) / 1.02;
-            lastOut = data[i];
-            data[i] *= 3.5; // (roughly) compensate for gain
-        }
-        
-        oscillator = audioCtx.createBufferSource();
-        oscillator.buffer = buffer;
-        oscillator.loop = true;
-        
-        // Apply lowpass filter
-        let filter = audioCtx.createBiquadFilter();
-        filter.type = 'lowpass';
-        filter.frequency.value = 400; // Muffled, warm sound
-        
-        gainNode = audioCtx.createGain();
-        gainNode.gain.value = 0.05; // Very subtle volume
-        
-        oscillator.connect(filter);
-        filter.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        
-        oscillator.start();
+        ambientAudio.play().catch(e => console.error("Audio play failed:", e));
     };
 
     const stopAmbientNoise = () => {
-        if (oscillator) {
-            oscillator.stop();
-            oscillator.disconnect();
-        }
+        ambientAudio.pause();
     };
 
     soundToggle.addEventListener('click', () => {
