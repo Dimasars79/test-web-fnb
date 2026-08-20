@@ -151,7 +151,7 @@ header.scrolled {
 }
 
 .nav-links {
-  display: flex;
+  display: none;
   gap: 2.5rem;
 }
 
@@ -183,7 +183,7 @@ header.scrolled {
 }
 
 .status-pill {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
@@ -201,6 +201,15 @@ header.scrolled {
   border-radius: 50%;
   background-color: var(--accent-terracotta);
   animation: pulse 2s infinite;
+}
+
+.mobile-menu-btn {
+  display: block;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 /* Hero Section */
@@ -317,7 +326,7 @@ header.scrolled {
 
 /* About Section */
 .about-grid {
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   align-items: center;
   gap: 4rem;
 }
@@ -619,9 +628,9 @@ header.scrolled {
   background: var(--bg-surface);
   border: 1px solid var(--border-glass);
   border-radius: 12px;
-  padding: 4rem;
+  padding: 2rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 4rem;
 }
 
@@ -676,7 +685,9 @@ footer {
 
 .footer-top {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 2rem;
+  text-align: center;
   align-items: center;
   margin-bottom: 4rem;
 }
@@ -799,39 +810,39 @@ footer {
     color: var(--text-secondary);
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
-  .location-card {
-    grid-template-columns: 1fr;
-    padding: 2rem;
+/* Responsive - Desktop & Tablet Enhancements */
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex;
   }
-}
-
-@media (max-width: 768px) {
-  .nav-links, .status-pill {
-    display: none;
+  
+  .status-pill {
+    display: flex;
   }
   
   .mobile-menu-btn {
-    display: block;
-    background: none;
-    border: none;
-    color: var(--text-primary);
-    font-size: 1.5rem;
-    cursor: pointer;
+    display: none;
   }
 
   .about-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   .hero-title {
-    font-size: 3rem;
+    font-size: clamp(4rem, 8vw, 7rem);
   }
   
   .footer-top {
-      flex-direction: column;
-      gap: 2rem;
-      text-align: center;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    gap: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .location-card {
+    grid-template-columns: 1fr 1fr;
+    padding: 4rem;
   }
 }
