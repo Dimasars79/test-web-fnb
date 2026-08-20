@@ -184,14 +184,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Ambient Sound Toggle ---
+    // --- Ambient Sound Toggle (Simulated) ---
+    // Note: Due to browser auto-play policies, actual audio needs user interaction first.
+    // For this demo, we'll just toggle UI states.
     const soundToggle = document.getElementById('sound-toggle');
     const soundIcon = document.getElementById('sound-icon');
     const visualizerDot = document.getElementById('visualizer-dot');
-    const volumeContainer = document.getElementById('volume-container');
-    const volumeSlider = document.getElementById('volume-slider');
     let isPlaying = false;
+    let visualizerTimer;
     
+    const animateVisualizer = () => {
+        if (!isPlaying) {
+            if (visualizerDot) visualizerDot.style.setProperty('--v-scale', 1);
+            return;
+        }
+        
+        if (visualizerDot) {
+            const scale = 1 + (Math.random() * 1.5);
+            visualizerDot.style.setProperty('--v-scale', scale);
+        }
+        
+        visualizerTimer = setTimeout(() => {
+            requestAnimationFrame(animateVisualizer);
+        }, 80);
+    };
+    
+    // Create a synthesized ambient noise just for effect
     let audioCtx;
     let oscillator;
     let gainNode;
@@ -201,34 +219,42 @@ document.addEventListener('DOMContentLoaded', () => {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         }
         
-        oscillator = audioCtx.createOscillator();
+        const bufferSize = audioCtx.sampleRate * 2; // 2 seconds of noise
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        
+        // Brown noise generation for a warm cafe hum
+        let lastOut = 0;
+        for (let i = 0; i < bufferSize; i++) {
+            let white = Math.random() * 2 - 1;
+            data[i] = (lastOut + (0.02 * white)) / 1.02;
+            lastOut = data[i];
+            data[i] *= 3.5; // (roughly) compensate for gain
+        }
+        
+        oscillator = audioCtx.createBufferSource();
+        oscillator.buffer = buffer;
+        oscillator.loop = true;
+        
+        // Apply lowpass filter
+        let filter = audioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 400; // Muffled, warm sound
+        
         gainNode = audioCtx.createGain();
+        gainNode.gain.value = 0.05; // Very subtle volume
         
-        oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(50, audioCtx.currentTime); // low freq
-        
-        const currentVol = parseFloat(volumeSlider.value);
-        
-        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-        gainNode.gain.linearRampToValueAtTime(currentVol * 0.1, audioCtx.currentTime + 2); // max actual gain 0.1
-        
-        oscillator.connect(gainNode);
+        oscillator.connect(filter);
+        filter.connect(gainNode);
         gainNode.connect(audioCtx.destination);
         
         oscillator.start();
-        
-        // Update visualizer scale
-        if (visualizerDot) {
-            visualizerDot.style.setProperty('--v-scale', currentVol * 1.5);
-        }
     };
 
     const stopAmbientNoise = () => {
-        if (gainNode) {
-            gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1); // fade out
-            setTimeout(() => {
-                if(oscillator) oscillator.stop();
-            }, 1000);
+        if (oscillator) {
+            oscillator.stop();
+            oscillator.disconnect();
         }
     };
 
@@ -238,39 +264,17 @@ document.addEventListener('DOMContentLoaded', () => {
             soundIcon.textContent = '🔊';
             soundToggle.classList.add('btn-primary');
             soundToggle.classList.remove('btn-outline');
-            if (visualizerDot) visualizerDot.classList.add('playing');
-            if (volumeContainer) volumeContainer.style.display = 'flex';
-            
-            // Resume context if suspended (browser auto-play policy)
-            if (audioCtx && audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
             playAmbientNoise();
+            animateVisualizer();
         } else {
             soundIcon.textContent = '🔈';
             soundToggle.classList.remove('btn-primary');
             soundToggle.classList.add('btn-outline');
-            if (visualizerDot) visualizerDot.classList.remove('playing');
-            if (volumeContainer) volumeContainer.style.display = 'none';
             stopAmbientNoise();
+            clearTimeout(visualizerTimer);
+            if (visualizerDot) visualizerDot.style.setProperty('--v-scale', 1);
         }
     });
-
-    if (volumeSlider) {
-        volumeSlider.addEventListener('input', (e) => {
-            const vol = parseFloat(e.target.value);
-            if (gainNode) {
-                // Instantly update volume
-                gainNode.gain.setTargetAtTime(vol * 0.1, audioCtx.currentTime, 0.1);
-            }
-            // Update visualizer intensity (scale factor)
-            if (visualizerDot) {
-                // If vol is 0, visualizer scale is 0 (stops bouncing essentially)
-                // If vol is 1, visualizer scale is 1.5x
-                visualizerDot.style.setProperty('--v-scale', vol * 1.5);
-            }
-        });
-    }
 
     // --- Back to Top ---
     const backToTopBtn = document.getElementById('back-to-top');

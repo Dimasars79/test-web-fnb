@@ -609,8 +609,9 @@ header.scrolled {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(var(--v-scale, 1));
   box-shadow: 0 0 20px var(--accent-terracotta);
+  transition: transform 0.08s ease-out;
 }
 
 /* Location */
