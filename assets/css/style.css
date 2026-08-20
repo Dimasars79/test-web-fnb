@@ -124,12 +124,12 @@ header {
   width: 100%;
   z-index: 100;
   padding: 1.5rem 0;
-  background: transparent;
+  background: linear-gradient(to bottom, rgba(11, 12, 14, 0.9) 0%, rgba(11, 12, 14, 0) 100%);
   transition: var(--transition-smooth);
 }
 
 header.scrolled {
-  background: var(--bg-glass);
+  background: rgba(11, 12, 14, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-glass);
