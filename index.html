@@ -31,10 +31,10 @@
                 <a href="#location">Location</a>
             </nav>
 
-            <div class="status-pill">
+            <button class="status-pill" id="status-pill-btn" style="cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.background='var(--bg-charcoal)'" onmouseout="this.style.background='var(--bg-surface)'" title="View Opening Hours">
                 <div class="status-dot"></div>
-                <span id="live-status">OPEN TONIGHT • 17:00 – 00:00 WIB</span>
-            </div>
+                <span id="live-status">CHECKING STATUS...</span>
+            </button>
 
             <button class="mobile-menu-btn" id="mobile-menu-btn" style="display:none;" aria-label="Menu">
                 ☰
@@ -337,7 +337,7 @@
                 
                 <div class="info-group">
                     <h4>HOURS</h4>
-                    <p>Every Day<br>17:00 – 00:00 WIB</p>
+                    <p>Weekday: 12.00 – 22.00 WIB<br>Weekend: 15.00 – 00.00 WIB</p>
                 </div>
 
                 <div class="location-actions">

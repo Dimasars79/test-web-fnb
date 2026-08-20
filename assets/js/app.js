@@ -44,18 +44,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Live Status Pill ---
     const liveStatus = document.getElementById('live-status');
+    const statusDot = document.querySelector('.status-dot');
+    const statusPillBtn = document.getElementById('status-pill-btn');
+    
     const updateStatus = () => {
         const now = new Date();
         const hour = now.getHours();
-        // Assuming open from 17:00 to 24:00 (00:00)
-        if (hour >= 17 || hour === 0) {
-            liveStatus.textContent = 'OPEN TONIGHT • 17:00 – 00:00 WIB';
+        const day = now.getDay(); // 0 is Sunday, 6 is Saturday
+        
+        let isOpen = false;
+        let scheduleText = '';
+
+        // Weekday (Mon-Fri)
+        if (day >= 1 && day <= 5) {
+            if (hour >= 12 && hour < 22) isOpen = true;
+            scheduleText = '12:00 – 22:00 WIB';
         } else {
-            liveStatus.textContent = 'CLOSED • OPENS AT 17:00 WIB';
+            // Weekend (Sat-Sun)
+            if (hour >= 15 && hour < 24) isOpen = true;
+            scheduleText = '15:00 – 00:00 WIB';
+        }
+
+        if (isOpen) {
+            liveStatus.textContent = `OPEN • ${scheduleText}`;
+            statusDot.style.backgroundColor = 'var(--accent-terracotta)';
+        } else {
+            liveStatus.textContent = `CLOSED • OPENS AT ${day >= 1 && day <= 5 ? '12:00' : '15:00'}`;
+            statusDot.style.backgroundColor = 'var(--text-muted)';
         }
     };
+    
     updateStatus();
     setInterval(updateStatus, 60000); // Check every minute
+
+    if (statusPillBtn) {
+        statusPillBtn.addEventListener('click', () => {
+            alert("⏰ TITIK HENTI OPENING HOURS:\n\n• Weekday (Mon-Fri): 12.00 - 22.00 WIB\n• Weekend (Sat-Sun): 15.00 - 24.00 WIB");
+        });
+    }
 
     // --- Scroll Reveal Animation ---
     const revealElements = document.querySelectorAll('.reveal');
