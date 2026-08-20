@@ -51,3 +51,23 @@
 .active .reveal-stagger:nth-child(4) { transition-delay: 0.4s; }
 .active .reveal-stagger:nth-child(5) { transition-delay: 0.5s; }
 .active .reveal-stagger:nth-child(6) { transition-delay: 0.6s; }
+
+/* Page Load Animations */
+.animate-on-load {
+  opacity: 0;
+  animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-700 { animation-delay: 0.7s; }
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
