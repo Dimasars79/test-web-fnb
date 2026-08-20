@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TITIK HENTI — Eat • Meet • Recharge</title>
+    <meta name="description" content="TITIK HENTI is a modern take on the Indonesian angkringan in Manahan, Solo. A place to stop. A place to meet. A place to recharge.">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+</head>
+<body>
+
+    <!-- Sticky Header -->
+    <header id="header">
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">TITIK HENTI</a>
+            
+            <nav class="nav-links">
+                <a href="#about">About</a>
+                <a href="#signatures">Signatures</a>
+                <a href="#place">The Place</a>
+                <a href="#story">Brand Story</a>
+                <a href="#location">Location</a>
+            </nav>
+
+            <div class="status-pill">
+                <div class="status-dot"></div>
+                <span id="live-status">OPEN TONIGHT • 17:00 – 00:00 WIB</span>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobile-menu-btn" style="display:none;" aria-label="Menu">
+                ☰
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-drawer" class="modal-overlay">
+        <div class="modal-content" style="text-align:center;">
+            <button class="modal-close" id="close-mobile-menu">×</button>
+            <div class="nav-links" style="display:flex; flex-direction:column; gap:2rem; font-size:1.5rem;">
+                <a href="#about" class="mobile-link">About</a>
+                <a href="#signatures" class="mobile-link">Signatures</a>
+                <a href="#place" class="mobile-link">The Place</a>
+                <a href="#story" class="mobile-link">Brand Story</a>
+                <a href="#location" class="mobile-link">Location</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg">
+            <img src="assets/images/hero_night_exterior.jpg" alt="Titik Henti Night Exterior">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content reveal">
+            <div class="hero-badge mono">MANAHAN, SOLO • EST. 2024</div>
+            <h1 class="hero-title">TITIK HENTI</h1>
+            <h2 class="hero-subtitle">EAT • MEET • RECHARGE</h2>
+            <p class="hero-subtitle" style="font-size: 1.125rem; font-style: italic;">"A place to stop. A place to meet. A place to recharge."</p>
+            <div class="hero-cta reveal-stagger">
+                <a href="#signatures" class="btn btn-primary">EXPLORE THE MENU ↓</a>
+                <a href="#place" class="btn btn-outline">EXPERIENCE THE SPACE</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section container">
+        <div class="grid about-grid">
+            <div class="about-text reveal">
+                <div class="hero-badge mono" style="border-color: var(--accent-terracotta); color: var(--accent-terracotta);">MORE THAN A STOP</div>
+                <h2>A Modern Angkringan Experience</h2>
+                <p>TITIK HENTI is a modern take on the Indonesian angkringan — bringing familiar flavors, warm hospitality, and a comfortable place to gather into one contemporary space.</p>
+                <div class="mono" style="color: var(--text-muted);">Coordinates: 7°33'18"S 110°48'09"E</div>
+            </div>
+            <div class="about-values reveal-stagger active">
+                <div class="value-card">
+                    <h3>EAT</h3>
+                    <p>Comfort food with a modern touch.</p>
+                </div>
+                <div class="value-card">
+                    <h3>MEET</h3>
+                    <p>A space made for conversations.</p>
+                </div>
+                <div class="value-card">
+                    <h3>RECHARGE</h3>
+                    <p>Slow down, stay awhile.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signatures Section -->
+    <section id="signatures" class="section container">
+        <div class="menu-header reveal">
+            <div class="hero-badge mono">SIGNATURES</div>
+            <h2>Curated Classics</h2>
+            <div class="menu-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="rice">Rice Bowls</button>
+                <button class="filter-btn" data-filter="noodles">Noodles</button>
+                <button class="filter-btn" data-filter="bites">Sate & Bites</button>
+            </div>
+        </div>
+
+        <div class="grid menu-grid reveal">
+            <!-- Item 1 -->
+            <div class="menu-card" data-category="rice">
+                <div class="menu-img">
+                    <img src="https://images.unsplash.com/photo-1626844131082-256783844137?auto=format&fit=crop&q=80&w=800&h=800" alt="Rice Bowl Salted Egg">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-title-row">
+                        <h3>Rice Bowl Salted Egg</h3>
+                        <span class="menu-price">Rp 32k</span>
+                    </div>
+                    <p class="menu-desc">Crispy aromatic chicken glazed in rich creamy golden salted egg reduction.</p>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="menu-card" data-category="rice">
+                <div class="menu-img">
+                    <img src="https://images.unsplash.com/photo-1625938146369-adc83368bda2?auto=format&fit=crop&q=80&w=800&h=800" alt="Rice Bowl Black Pepper">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-title-row">
+                        <h3>Rice Bowl Black Pepper</h3>
+                        <span class="menu-price">Rp 35k</span>
+                    </div>
+                    <p class="menu-desc">Tender beef strips tossed in cracked Sarawak black pepper reduction.</p>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="menu-card" data-category="rice">
+                <div class="menu-img">
+                    <img src="https://images.unsplash.com/photo-1598514982205-f36b96d1e8d4?auto=format&fit=crop&q=80&w=800&h=800" alt="Rice Bowl Teriyaki">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-title-row">
+                        <h3>Rice Bowl Teriyaki</h3>
+                        <span class="menu-price">Rp 28k</span>
+                    </div>
+                    <p class="menu-desc">Torched chicken thigh glazed in sweet-savory tare with sesame & scallions.</p>
+                </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="menu-card" data-category="rice">
+                <div class="menu-img">
+                    <img src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&q=80&w=800&h=800" alt="Nasi Goreng Oriental">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-title-row">
+                        <h3>Nasi Goreng Oriental</h3>
+                        <span class="menu-price">Rp 28k</span>
+                    </div>
+                    <p class="menu-desc">Wok-tossed aromatic fried rice with wok-hei essence and savory accompaniments.</p>
+                </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="menu-card" data-category="noodles">
+                <div class="menu-img">
+                    <img src="https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&q=80&w=800&h=800" alt="Mie Tek-Tek">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-title-row">
+                        <h3>Mie Tek-Tek</h3>
+                        <span class="menu-price">Rp 25k</span>
+                    </div>
+                    <p class="menu-desc">Slow-simmered street noodles infused with aromatic Indonesian herbs.</p>
+                </div>
+            </div>
+
+            <!-- Item 6 -->
+            <div class="menu-card" data-category="noodles">
+                <div class="menu-img">
+                    <img src="https://images.unsplash.com/photo-1612927601601-6638404737ce?auto=format&fit=crop&q=80&w=800&h=800" alt="Mie Dok-Dok">
+                </div>
+                <div class="menu-info">
+                    <div class="menu-title-row">
+                        <h3>Mie Dok-Dok</h3>
+                        <span class="menu-price">Rp 26k</span>
+                    </div>
+                    <p class="menu-desc">Rich savory broth with egg ribbons, artisanal chili sambal, and springy noodles.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-footer reveal">
+            <button id="view-full-menu" class="btn btn-outline">VIEW FULL MENU</button>
+        </div>
+    </section>
+
+    <!-- Full Menu Modal -->
+    <div id="full-menu-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="close-menu-modal">×</button>
+            <div class="menu-header">
+                <h2>Full Menu</h2>
+                <div class="mono" style="color:var(--accent-amber)">TITIK HENTI</div>
+            </div>
+            
+            <div class="modal-body">
+                <div class="menu-category-title">Mains</div>
+                <div class="menu-list">
+                    <div class="menu-item-row">
+                        <span class="menu-item-name">Rice Bowl Salted Egg</span>
+                        <span class="menu-item-price">32k</span>
+                    </div>
+                    <div class="menu-item-row">
+                        <span class="menu-item-name">Rice Bowl Black Pepper</span>
+                        <span class="menu-item-price">35k</span>
+                    </div>
+                    <div class="menu-item-row">
+                        <span class="menu-item-name">Nasi Goreng Oriental</span>
+                        <span class="menu-item-price">28k</span>
+                    </div>
+                    <div class="menu-item-row">
+                        <span class="menu-item-name">Mie Tek-Tek</span>
+                        <span class="menu-item-price">25k</span>
+                    </div>
+                </div>
+
+                <div class="menu-category-title">Angkringan Sate-satean</div>
+                <div class="menu-list">
+                    <div class="menu-item-row">
+                        <span class="menu-item-name">Sate Usus Bakar</span>
+                        <span class="menu-item-price">5k</span>
+                    </div>
+                    <div class="menu-item-row">
+                        <span class="menu-item-name">Sate Telur Puyuh</span>
+                        <span class="menu-item-price">6k</span>
+                    </div>
+                    <div class="menu-item-row">
+                        <span class="menu-item-name">Sate Kulit</span>
+                        <span class="menu-item-price">5k</span>
+                    </div>
+                </div>
+
+                <div class="menu-category-title">Signature Drinks</div>
+                <div class="menu-list">
+                    <div class="menu-item-row">
+                        <span class="menu-item-name">Es Kampul Klasik</span>
+                        <span class="menu-item-price">12k</span>
+                    </div>
+                    <div class="menu-item-row">
+                        <span class="menu-item-name">Wedang Jahe Susu</span>
+                        <span class="menu-item-price">15k</span>
+                    </div>
+                    <div class="menu-item-row">
+                        <span class="menu-item-name">Artisan Coffee Aren</span>
+                        <span class="menu-item-price">22k</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Place Section -->
+    <section id="place" class="section container">
+        <div class="menu-header reveal">
+            <div class="hero-badge mono">THE PLACE</div>
+            <h2>3 SPOTS • 3 STORIES • 1 PLACE TO STOP</h2>
+        </div>
+
+        <div class="gallery-tabs reveal">
+            <button class="tab-btn active" data-spot="1">01. THE FRONT CORNER</button>
+            <button class="tab-btn" data-spot="2">02. THE DINING AREA</button>
+            <button class="tab-btn" data-spot="3">03. THE UPPER DECK</button>
+        </div>
+
+        <div class="gallery-content reveal">
+            <div class="gallery-pane active" id="spot-1">
+                <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=1600&h=900" alt="The Front Corner">
+                <div class="gallery-caption">
+                    <h3>The Front Corner</h3>
+                    <p>“First impressions. Where the journey begins.”</p>
+                </div>
+            </div>
+            <div class="gallery-pane" id="spot-2">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=1600&h=900" alt="The Dining Area">
+                <div class="gallery-caption">
+                    <h3>The Dining Area</h3>
+                    <p>“Good food, good people, good moments.”</p>
+                </div>
+            </div>
+            <div class="gallery-pane" id="spot-3">
+                <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=1600&h=900" alt="The Upper Deck">
+                <div class="gallery-caption">
+                    <h3>The Upper Deck</h3>
+                    <p>“City lights, fresh air, and late-night conversations.”</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Story Section -->
+    <section id="story" class="section story-section">
+        <div class="container reveal">
+            <h2 class="story-text">EVERY JOURNEY<br>NEEDS A PLACE<br>TO STOP.</h2>
+            <p class="story-sub">“Sometimes, all you need is a good meal, a familiar place, and a little time to yourself.”</p>
+            
+            <div class="coordinate-line">
+                <div class="coordinate-dot"></div>
+            </div>
+            
+            <button id="sound-toggle" class="btn btn-outline" style="border-radius:100px; padding:0.5rem 1.5rem;">
+                <span id="sound-icon">🔈</span> Ambient Sound
+            </button>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section id="location" class="section container">
+        <div class="location-card reveal">
+            <div class="location-info">
+                <div class="hero-badge mono">YOUR NEXT STOP</div>
+                <h2>Visit Us</h2>
+                
+                <div class="info-group">
+                    <h4>ADDRESS</h4>
+                    <p>Jl. Manahan, Surakarta, Jawa Tengah<br><span style="color:var(--text-secondary); font-size:0.875rem;">(Near Manahan Stadium)</span></p>
+                </div>
+                
+                <div class="info-group">
+                    <h4>HOURS</h4>
+                    <p>Every Day<br>17:00 – 00:00 WIB</p>
+                </div>
+
+                <div class="location-actions">
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-primary" style="width: 100%;">GET DIRECTIONS →</a>
+                    <a href="#" class="btn btn-outline" style="width: 100%;">RESERVE A TABLE / WHATSAPP</a>
+                    <a href="#" class="btn btn-outline" style="width: 100%;">INSTAGRAM @titikhenti.solo</a>
+                </div>
+            </div>
+            
+            <div class="location-map">
+                <!-- Embedded Google Map targeting Manahan Solo area -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15820.760086208882!2d110.79379655541991!3d-7.553258599999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a16892e85a5bb%3A0xc6822c7c5cc49b5c!2sManahan%2C%20Banjarsari%2C%20Surakarta%20City%2C%20Central%20Java!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-top">
+                <div>
+                    <div class="footer-logo">TITIK HENTI</div>
+                    <div style="color:var(--text-secondary); margin-top:0.5rem;">Eat • Meet • Recharge</div>
+                </div>
+                <div class="footer-links">
+                    <a href="#about">About</a>
+                    <a href="#signatures">Menu</a>
+                    <a href="#place">Gallery</a>
+                    <a href="#location">Contact</a>
+                </div>
+                <button id="back-to-top" class="btn btn-outline" style="border-radius:100px; padding:0.5rem; width:40px; height:40px; display:flex; align-items:center; justify-content:center;">↑</button>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TITIK HENTI. All rights reserved.</p>
+                <p>Designed with ❤️ in Solo.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
